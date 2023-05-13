@@ -1,7 +1,7 @@
 <template>
   <v-navigation-drawer v-model="drawer" app color="white" mini-variant mini-variant-width="90">
       <v-avatar class="d-block text-center mx-auto mt-4" size="40">
-          <v-icon color="#feb600">fas fa-codepen</v-icon>
+          <v-icon color="#ff0000">fas fa-codepen</v-icon>
       </v-avatar>
       <v-list flat class="mt-4">
           <v-list-item-group v-model="selectedItem">
@@ -40,7 +40,7 @@ data: () => ({
 .border {
     margin-left: 8px;
     margin-right: 8px;
-    background: #feb600;
+    background: #ff0000;
     /* border-radius: 2px; */
     text-decoration: none;
 }

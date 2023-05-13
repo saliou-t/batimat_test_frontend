@@ -1,11 +1,11 @@
 <template>
   <v-app :style="{ background: $vuetify.theme.themes.dark.background }">
-
     <v-container>
       <v-toolbar color="rgba(0,0,0,0)" flat>
+      
         <v-toolbar-title class="mt-n3">Point de Vente !</v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-text-field label="Rechercher produit par référence..." class="mt-5" color="brown" filled
+        <v-text-field label="Rechercher produit par référence..."  v-model="searchInput" class="mt-5" color="brown" filled
           append-icon="mdi-magnify" dense solo flat background-color="grey lighten-4"></v-text-field>
       </v-toolbar>
       <v-item-group mandatory class="mt-n1">
@@ -21,7 +21,7 @@
                         <v-list-item-content>
                           <div align="center" justify="center">
 
-                            <v-img src="c1.png" max-height="110" max-width="110" contain></v-img>
+                            <v-img src="https://via.placeholder.com/80" max-height="110" max-width="110" contain></v-img>
 
                           </div>
                           <v-list-item-subtitle :class="active ? 'brown--text' : 'black--text'"
@@ -45,7 +45,7 @@
                         <v-list-item-content>
                           <div align="center" justify="center">
 
-                            <v-img src="c2.png" max-height="90" max-width="90" contain></v-img>
+                            <v-img src="https://via.placeholder.com/100" max-height="90" max-width="90" contain></v-img>
 
                           </div>
                           <v-list-item-subtitle :class="active ? 'brown--text' : 'black--text'"
@@ -69,7 +69,7 @@
                         <v-list-item-content>
                           <div align="center" justify="center">
 
-                            <v-img src="c3.png" max-height="80" max-width="80" contain></v-img>
+                            <v-img src="https://via.placeholder.com/80" max-height="80" max-width="80" contain></v-img>
 
                           </div>
                           <v-list-item-subtitle :class="active ? 'brown--text' : 'black--text'"
@@ -93,7 +93,7 @@
                         <v-list-item-content>
                           <div align="center" justify="center">
 
-                            <v-img src="c4.png" max-height="80" max-width="80" contain></v-img>
+                            <v-img src="https://via.placeholder.com/80" max-height="80" max-width="80" contain></v-img>
 
                           </div>
                           <v-list-item-subtitle :class="active ? 'brown--text' : 'black--text'" class=" caption mt-2">Milk
@@ -117,7 +117,7 @@
                         <v-list-item-content>
                           <div align="center" justify="center">
 
-                            <v-img src="c5.png" max-height="110" max-width="110" contain></v-img>
+                            <v-img src="https://via.placeholder.com/80" max-height="110" max-width="110" contain></v-img>
 
                           </div>
                           <v-list-item-subtitle :class="active ? 'brown--text' : 'black--text'"
@@ -141,7 +141,7 @@
                         <v-list-item-content>
                           <div align="center" justify="center">
 
-                            <v-img src="c6.png" max-height="110" max-width="110" contain></v-img>
+                            <v-img src="https://via.placeholder.com/80" max-height="110" max-width="110" contain></v-img>
 
                           </div>
                           <v-list-item-subtitle :class="active ? 'brown--text' : 'black--text'"
@@ -162,7 +162,7 @@
         <v-toolbar-title>Produits</v-toolbar-title><v-spacer></v-spacer><span color="grey">Reçents</span>
       </v-toolbar>
       <v-row>
-        <v-col cols="8" sm="6" v-for="produit in produits" v-bind:key="produit">
+        <v-col cols="8" sm="6" v-for="produit in produits" v-bind:key="produit.reference">
           <v-card flat class="rounded-lg mx-5 mes_carte">
             <v-list-item three-line>
               <v-list-item-avatar rounded size="120" color="grey lighten-4">
@@ -174,7 +174,7 @@
                 </v-list-item-title>
                 <v-list-item-subtitle class="mt-1">Designation : <br> {{ produit.designation }}</v-list-item-subtitle>
                 <strong class="mt-3">
-                  {{produit.prix_unitaire}} F
+                  Unité : {{produit.prix_unitaire}} F
                 </strong>
               </v-list-item-content>
 
@@ -198,7 +198,7 @@
                 <v-col cols="8" sm="5" class=" ">
                   <strong class="ml-3">Quantité souhaitée</strong><br>
                   <v-item-group mandatory class="mt-n1">
-                    <v-text-field v-model=produit.quantite_initiale label="" max="4" append-outer-icon="add" @click:append-outer="increment" prepend-icon="remove" @click:prepend="decrement"></v-text-field>
+                    <v-text-field v-model=produit.quantite_initiale label="" max="4" append-outer-icon="add" @click:append-outer="increment(produit)" prepend-icon="remove" @click:prepend="decrement"></v-text-field>
                     
                   </v-item-group>
                 </v-col>
@@ -209,7 +209,7 @@
             
             <v-card-actions>
 
-              <v-btn color="#feb600" block dark class="withoutupercase mb-2" @click="addToCart(produit)">Ajouter au panier</v-btn>
+              <v-btn color="#ff0000" block dark class="withoutupercase mb-2" @click="addToCart(produit)">Ajouter au panier</v-btn>
 
             </v-card-actions>
           </v-card>
@@ -261,27 +261,47 @@ export default {
           designation: 'Produit 4',
           quantite_initiale:0
         }
-      ]
+      ],
+      searchInput: "",
+      resulat_recherche:[]
      }
   },
 
-  components: {
-
+  computed: {
+    searchResults() {
+      
+      if (!this.searchInput) {
+        return [];
+      }
+      return this.produits.filter(produit => produit.reference.toLowerCase() == this.searchInput.toLowerCase());
+    },
   },
+
   methods: {
-    increment () {
-      this.foo = parseInt(this.foo,10) + 1 
-     
+
+    increment (produit) {
+      if (produit.quantite_disponible > produit.quantite_initiale ) {
+        produit.quantite_initiale = parseInt(produit.quantite_initiale,10) + 1 
+        
+      }
     },
 
-    addToCart(product) {
-      this.$store.commit('addToCart', product)
+    addToCart(produit_ajoute) {
+
+      let produit = {
+        'reference': produit_ajoute.reference,
+        'quantite_disponible': produit_ajoute.quantite_dispo,
+        'prix_unitaire': produit_ajoute.prix_unitaire,
+        'image': produit_ajoute.image,
+        'designation': produit_ajoute.designation,
+        'quantite': produit_ajoute.quantite_initiale
+      }
+
+      this.$store.commit('addToCart', produit)
     },
 
     decrement () {
-      while (this.foo > 0) {
-        this.foo = parseInt(this.foo,10) - 1
-      }
+      this.foo = parseInt(this.foo,10) - 1
     }
   }
 }
@@ -290,7 +310,7 @@ export default {
 
 
 .v-card.borderme {
-  border: 2px solid #feb600 !important;
+  border: 2px solid #ff0000 !important;
 }
 
 .v-card.borderout {

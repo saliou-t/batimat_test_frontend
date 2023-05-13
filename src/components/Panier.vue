@@ -17,55 +17,21 @@
           </v-list-item>
       </v-list>
       <strong class="ml-3">Panier</strong>
-      <v-list subheader two-line class="mt-1">
+      <v-list subheader two-line class="mt-1" v-for="produit in panier" :key="produit.reference" >
           <v-list-item>
               <v-list-item-avatar rounded color="grey lighten-4">
                   <v-img src="2.png"></v-img>
               </v-list-item-avatar>
               <v-list-item-content>
-                  <v-list-item-title class="subtitle-2">Caramel Frappuccino</v-list-item-title>
-                  <v-list-item-subtitle>X1
+                  <v-list-item-title class="subtitle-2">{{ produit.reference }}</v-list-item-title>
+                  <v-list-item-subtitle>x{{produit.quantite}}
                       <v-btn plain color="green" small>Notes
                           <v-icon right>mdi-pencil</v-icon>
                       </v-btn>
 
                   </v-list-item-subtitle>
               </v-list-item-content>
-              <v-list-item-action class="caption">$3.95</v-list-item-action>
-          </v-list-item>
-      </v-list>
-      <v-list subheader two-line class="mt-1">
-          <v-list-item>
-              <v-list-item-avatar rounded color="grey lighten-4">
-                  <v-img src="3.png"></v-img>
-              </v-list-item-avatar>
-              <v-list-item-content>
-                  <v-list-item-title class="subtitle-2">Chocolate Frappuccino</v-list-item-title>
-                  <v-list-item-subtitle>X2
-                      <v-btn plain color="green" small>Notes
-                          <v-icon right>mdi-pencil</v-icon>
-                      </v-btn>
-
-                  </v-list-item-subtitle>
-              </v-list-item-content>
-              <v-list-item-action class="caption">$9.02</v-list-item-action>
-          </v-list-item>
-      </v-list>
-      <v-list subheader two-line class="mt-1">
-          <v-list-item>
-              <v-list-item-avatar rounded color="grey lighten-4">
-                  <v-img src="4.png"></v-img>
-              </v-list-item-avatar>
-              <v-list-item-content>
-                  <v-list-item-title class="subtitle-2">Peppermint Macchiato</v-list-item-title>
-                  <v-list-item-subtitle>X1
-                      <v-btn plain color="green" small>Notes
-                          <v-icon right>mdi-pencil</v-icon>
-                      </v-btn>
-
-                  </v-list-item-subtitle>
-              </v-list-item-content>
-              <v-list-item-action class="caption">$5.34</v-list-item-action>
+              <v-list-item-action class="caption">{{ produit.prix_unitaire }} F</v-list-item-action>
           </v-list-item>
       </v-list>
       <v-toolbar color="rgba(0,0,0,0)" flat>
@@ -91,10 +57,10 @@
                                   <v-list-item three-line class="text-center mt-1">
                                       <v-list-item-content>
                                           <div>
-                                              <v-icon :color="active ? '#feb600' : 'black'">fas fa-money-bill-wave</v-icon>
+                                              <v-icon :color="active ? '#ff0000' : 'black'">fas fa-money-bill-wave</v-icon>
                                           </div>
                                           <v-list-item-subtitle
-                                          :class="active ? 'brown--text' : 'black--text'" class="mt-n2 caption">Cach</v-list-item-subtitle>
+                                          :class="active ? 'brown--text' : 'black--text'" class="mt-n2 caption">Espece</v-list-item-subtitle>
                                       </v-list-item-content>
                                   </v-list-item>
                               </v-col>
@@ -111,10 +77,10 @@
                                   <v-list-item three-line class="text-center mt-1">
                                       <v-list-item-content>
                                           <div>
-                                              <v-icon :color="active ? '#feb600' : 'black'">fas fa-credit-card</v-icon>
+                                              <v-icon :color="active ? '#ff0000' : 'black'">fas fa-credit-card</v-icon>
                                           </div>
                                           <v-list-item-subtitle
-                                          :class="active ? 'brown--text' : 'black--text'" class="mt-n2 caption">debit Card</v-list-item-subtitle>
+                                          :class="active ? 'brown--text' : 'black--text'" class="mt-n2 caption">Carte bancaire</v-list-item-subtitle>
                                       </v-list-item-content>
                                   </v-list-item>
                               </v-col>
@@ -131,10 +97,10 @@
                                   <v-list-item three-line class="text-center mt-1">
                                       <v-list-item-content>
                                           <div>
-                                              <v-icon :color="active ? '#704232' : 'black'">fas fa-qrcode</v-icon>
+                                              <v-icon :color="active ? '#ff0000' : 'black'">fas fa-qrcode</v-icon>
                                           </div>
                                           <v-list-item-subtitle
-                                          :class="active ? 'brown--text' : 'black--text'" class="mt-n2 caption">E-Wallet</v-list-item-subtitle>
+                                          :class="active ? 'brown--text' : 'black--text'" class="mt-n2 caption">Chèque</v-list-item-subtitle>
                                       </v-list-item-content>
                                   </v-list-item>
                               </v-col>
@@ -146,14 +112,23 @@
           </v-container>
       </v-item-group>
       <div class="mx-3 mt-2">
-          <v-btn color="#feb600" block dark class="widthoutupercase">Imprimer ticket</v-btn>
+          <v-btn color="#ff0000" block dark class="widthoutupercase">Imprimer ticket</v-btn>
       </div>
   </v-navigation-drawer>
 </template>
 
 <script>
 export default {
-
+ computed: {
+        panier () {
+            return this.$store.state.panier
+        }
+    },
+    methods: {
+        supprimerDuPanier (produit) {
+            this.$store.dispatch('supprimerProduitDuPanier', produit)
+        }
+    }
 }
 </script>
 

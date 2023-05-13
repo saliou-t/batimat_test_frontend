@@ -10,9 +10,17 @@ const store = new Vuex.Store({
   },
   mutations: {
     
-    addToCart(state, product) {
-      state.panier.push(product)
+    addToCart(state, produit) {
+      state.panier.push(produit)
       console.log(state.panier);
+    },
+
+      updateCartProductQuantity(state, { produitId, quantite }) {
+      const cartProduct = state.cart.find(p => p.id === produitId);
+      
+      if (cartProduct) {
+        cartProduct.quantite = quantite;
+      }
     },
     
     removeFromCart(state, index) {
@@ -21,14 +29,26 @@ const store = new Vuex.Store({
     
     clearCart(state) {
       state.panier = []
-    }
+    },
+
+    initialiserPanier (state) {
+      const panier = JSON.parse(localStorage.getItem('panier'))
+      if (panier) {
+        state.panier = panier
+      }
+    },    
+
   },
 
   actions: {
+    updateCartProductQuantity({ commit }, { produitId, quantite }) {
+      commit('updateCartProductQuantity', { produitId, quantite });
+    },
+
     ajouterProduitAuPanier ({ commit }, produit) {
       commit('ajouterProduitAuPanier', produit)
     },
-    
+
     supprimerProduitDuPanier ({ commit }, produit) {
       commit('supprimerProduitDuPanier', produit)
     }
