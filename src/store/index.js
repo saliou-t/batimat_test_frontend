@@ -3,13 +3,43 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
   state: {
+    
+    panier: []
   },
   mutations: {
+    
+    addToCart(state, product) {
+      state.panier.push(product)
+      console.log(state.panier);
+    },
+    
+    removeFromCart(state, index) {
+      state.panier.splice(index, 1)
+    },
+    
+    clearCart(state) {
+      state.panier = []
+    }
   },
+
   actions: {
+    ajouterProduitAuPanier ({ commit }, produit) {
+      commit('ajouterProduitAuPanier', produit)
+    },
+    
+    supprimerProduitDuPanier ({ commit }, produit) {
+      commit('supprimerProduitDuPanier', produit)
+    }
   },
-  modules: {
+
+  getters: {
+    
+    cartTotal(state) {
+      return state.panier.length
+    }
   }
 })
+
+export default store

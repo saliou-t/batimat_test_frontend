@@ -209,7 +209,7 @@
             
             <v-card-actions>
 
-              <v-btn color="#feb600" block dark class="withoutupercase mb-2">Ajouter au panier</v-btn>
+              <v-btn color="#feb600" block dark class="withoutupercase mb-2" @click="addToCart(produit)">Ajouter au panier</v-btn>
 
             </v-card-actions>
           </v-card>
@@ -273,6 +273,11 @@ export default {
       this.foo = parseInt(this.foo,10) + 1 
      
     },
+
+    addToCart(product) {
+      this.$store.commit('addToCart', product)
+    },
+
     decrement () {
       while (this.foo > 0) {
         this.foo = parseInt(this.foo,10) - 1
