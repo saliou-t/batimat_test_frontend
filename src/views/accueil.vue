@@ -177,8 +177,6 @@
                   Unité : {{produit.prix_unitaire}} F
                 </strong>
               </v-list-item-content>
-
-
             </v-list-item>
 
             <v-card-actions>
@@ -282,7 +280,6 @@ export default {
     increment (produit) {
       if (produit.quantite_disponible > produit.quantite_initiale ) {
         produit.quantite_initiale = parseInt(produit.quantite_initiale,10) + 1 
-        
       }
     },
 

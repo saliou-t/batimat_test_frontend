@@ -13,9 +13,6 @@
   import Panier from './components/Panier'
   
   
-  
-  
-  
   export default {
     components: {
         SideBar,
