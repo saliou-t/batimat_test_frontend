@@ -220,46 +220,48 @@
 
 <script>
 
+const { default: Api } = require('../services/Api');
 export default {
   name: 'Home',
   data () {
      return {
        foo: 0,
        quantite_dispo: 5,
-       produits: [
-        {
-          reference: 'PROD001',
-          quantite_disponible: 10,
-          prix_unitaire: 20,
-          image:"https://via.placeholder.com/150",
-          designation: 'Produit 1',
-          quantite_initiale:0
-        },
-        {
-          reference: 'PROD002',
-          quantite_disponible: 5,
-          image:"https://via.placeholder.com/150",
-          prix_unitaire: 30,
-          designation: 'Produit 2',
-          quantite_initiale:0
-        },
-        {
-          reference: 'PROD003',
-          quantite_disponible: 8,
-          image:"https://via.placeholder.com/150",
-          prix_unitaire: 15,
-          designation: 'Produit 3',
-          quantite_initiale:0
-        },
-        {
-          reference: 'PROD004',
-          quantite_disponible: 20,
-          image:"https://via.placeholder.com/150",
-          prix_unitaire: 10,
-          designation: 'Produit 4',
-          quantite_initiale:0
-        }
-      ],
+       produits:[],
+      //  produits: [
+      //   {
+      //     reference: 'PROD001',
+      //     quantite_disponible: 10,
+      //     prix_unitaire: 20,
+      //     image:"https://via.placeholder.com/150",
+      //     designation: 'Produit 1',
+      //     quantite_initiale:0
+      //   },
+      //   {
+      //     reference: 'PROD002',
+      //     quantite_disponible: 5,
+      //     image:"https://via.placeholder.com/150",
+      //     prix_unitaire: 30,
+      //     designation: 'Produit 2',
+      //     quantite_initiale:0
+      //   },
+      //   {
+      //     reference: 'PROD003',
+      //     quantite_disponible: 8,
+      //     image:"https://via.placeholder.com/150",
+      //     prix_unitaire: 15,
+      //     designation: 'Produit 3',
+      //     quantite_initiale:0
+      //   },
+      //   {
+      //     reference: 'PROD004',
+      //     quantite_disponible: 20,
+      //     image:"https://via.placeholder.com/150",
+      //     prix_unitaire: 10,
+      //     designation: 'Produit 4',
+      //     quantite_initiale:0
+      //   }
+      // ],
       searchInput: "",
       resulat_recherche:[]
      }
@@ -275,7 +277,26 @@ export default {
     },
   },
 
+  created() {
+    this.getProduits()
+  },
+
   methods: {
+
+    getProduits(){
+      let produits = []
+      Api()
+      .get('/produit')
+      .then(response => {
+        let data =  response.data;
+        for (const item in data) {
+          produits.push(data[item])
+        }
+        
+      })
+
+      this.produits = produits
+    },
 
     increment (produit) {
       if (produit.quantite_disponible > produit.quantite_initiale ) {

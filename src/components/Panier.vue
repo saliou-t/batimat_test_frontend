@@ -148,6 +148,8 @@
 </template>
 
 <script>
+import { saveVente } from '../services/Vente/vente.service';
+
 export default {
     computed: {
         panier() {
@@ -160,7 +162,7 @@ export default {
         },
 
         Enregister(){
-            
+            saveVente(this.$store.state.panier)
         }
     }
 }
