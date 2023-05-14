@@ -1,7 +1,7 @@
 <template>
   <v-app>
-    <SideBar />
-    <Panier />
+    <SideBar v-if="isAuthicate"/>
+    <Panier v-if="isAuthicate" />
     <v-main>
       <router-view/>
     </v-main>
@@ -23,7 +23,19 @@
 
   data: () => ({
   
-    //
+    isAuthicate:false,
   }),
+
+  methods: {
+    checkIsAuthenticate(){
+      let user = localStorage.getItem('user')
+      if (user) {
+        this.isAuthicate = true
+      }
+    }
+  },
+  mounted() {
+    this.checkIsAuthenticate();
+  },
 };
 </script>

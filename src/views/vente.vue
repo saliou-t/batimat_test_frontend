@@ -3,7 +3,7 @@
     <v-container>
      
       <v-toolbar color="#EEEEEE" flat>
-        <v-toolbar-title>Déja au panier</v-toolbar-title><v-spacer></v-spacer><span color="grey">Reçents</span>
+        <v-toolbar-title>Liste de mes ventes</v-toolbar-title><v-spacer></v-spacer><span color="grey">Reçents</span>
       </v-toolbar>
       <v-row>
         <v-col cols="8" sm="6" v-for="produit in produits" v-bind:key="produit.reference">
