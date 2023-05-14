@@ -195,8 +195,8 @@
                 </v-col>
                 <v-col cols="8" sm="5" class=" ">
                   <strong class="ml-3">Quantité souhaitée</strong><br>
-                  <v-item-group mandatory class="mt-n1">
-                    <v-text-field v-model=produit.quantite_initiale label="" max="4" append-outer-icon="add" @click:append-outer="increment(produit)" prepend-icon="remove" @click:prepend="decrement"></v-text-field>
+                  <v-item-group mandatory class="mt-n3">
+                    <v-text-field v-model=produit.quantite_initiale label="" max="4" append-outer-icon="add" @click:append-outer="increment(produit)" prepend-icon="remove" @click:prepend="decrement(produit)"></v-text-field>
                     
                   </v-item-group>
                 </v-col>
@@ -270,7 +270,7 @@ export default {
     },
 
     addToCart(produit_ajoute) {
-
+     
       let produit = {
         'reference': produit_ajoute.reference,
         'quantite_disponible': produit_ajoute.quantite_dispo,
@@ -284,8 +284,10 @@ export default {
       this.$store.commit('addToCart', produit)
     },
 
-    decrement () {
-      this.produit = parseInt(this.produit,10) - 1
+    decrement (produit) {
+      if (1 > produit.quantite_initiale ) {
+        produit.quantite_initiale = parseInt(produit.quantite_initiale,10) - 1 
+      }
     }
   }
 }

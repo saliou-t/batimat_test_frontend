@@ -28,7 +28,6 @@
                         <v-btn plain color="red" small>
                             <v-icon right @click="supprimerDuPanier(produit)">mdi-pencil</v-icon>
                         </v-btn>
-
                     </v-list-item-subtitle>
                 </v-list-item-content>
                 <v-list-item-action class="caption">{{ produit.prix_unitaire }} F</v-list-item-action>
@@ -38,7 +37,6 @@
             </v-toolbar>
             <hr>
         </v-list>
-        
         <v-toolbar color="rgba(0,0,0,0)" flat class="mt-n6">
             <span>Nombre produit(s)</span><v-spacer></v-spacer><span>{{ panier.length }}</span>
         </v-toolbar>
@@ -173,7 +171,9 @@ export default {
         },
 
         Enregister(){
-            saveVente(this.$store.state.panier)
+            let panier = this.$store.state.panier
+           
+            saveVente(panier)
         }
     }
 }
