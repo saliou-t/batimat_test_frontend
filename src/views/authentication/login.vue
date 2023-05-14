@@ -34,10 +34,10 @@
                 @click:append="passwordShow = !passwordShow"
                 required
               />
-              <v-switch label="Se souvenir de moi" color="#3D2515"></v-switch>
+              <v-switch label="Se souvenir de moi" color="#ff0000"></v-switch>
             </v-card-text>
             <v-card-actions class="justify-center">
-              <v-btn :loading="loading" type="submit" color="#3D2515">
+              <v-btn :loading="loading" type="submit" color="#ff0000">
                 <span class="white--text px-8">connexion</span>
               </v-btn>
             </v-card-actions>
@@ -142,12 +142,12 @@ export default {
     background-size: cover;
   }
   .texte{
-    color: #3D2515;
+    color: #ff0000;
     font-size: 30px;
 
   }
   .blog{
-    border-left: 6px solid #3D2515 !important;
+    border-left: 6px solid #ff0000 !important;
     border-radius: 0% !important;
   }
   

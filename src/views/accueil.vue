@@ -225,43 +225,9 @@ export default {
   name: 'Home',
   data () {
      return {
-       foo: 0,
+       produit: 0,
        quantite_dispo: 5,
        produits:[],
-      //  produits: [
-      //   {
-      //     reference: 'PROD001',
-      //     quantite_disponible: 10,
-      //     prix_unitaire: 20,
-      //     image:"https://via.placeholder.com/150",
-      //     designation: 'Produit 1',
-      //     quantite_initiale:0
-      //   },
-      //   {
-      //     reference: 'PROD002',
-      //     quantite_disponible: 5,
-      //     image:"https://via.placeholder.com/150",
-      //     prix_unitaire: 30,
-      //     designation: 'Produit 2',
-      //     quantite_initiale:0
-      //   },
-      //   {
-      //     reference: 'PROD003',
-      //     quantite_disponible: 8,
-      //     image:"https://via.placeholder.com/150",
-      //     prix_unitaire: 15,
-      //     designation: 'Produit 3',
-      //     quantite_initiale:0
-      //   },
-      //   {
-      //     reference: 'PROD004',
-      //     quantite_disponible: 20,
-      //     image:"https://via.placeholder.com/150",
-      //     prix_unitaire: 10,
-      //     designation: 'Produit 4',
-      //     quantite_initiale:0
-      //   }
-      // ],
       searchInput: "",
       resulat_recherche:[]
      }
@@ -269,7 +235,6 @@ export default {
 
   computed: {
     searchResults() {
-      
       if (!this.searchInput) {
         return [];
       }
@@ -309,6 +274,7 @@ export default {
       let produit = {
         'reference': produit_ajoute.reference,
         'quantite_disponible': produit_ajoute.quantite_dispo,
+        'sousTotal': produit_ajoute.prix_unitaire * produit_ajoute.quantite_initiale,
         'prix_unitaire': produit_ajoute.prix_unitaire,
         'image': produit_ajoute.image,
         'designation': produit_ajoute.designation,
@@ -319,7 +285,7 @@ export default {
     },
 
     decrement () {
-      this.foo = parseInt(this.foo,10) - 1
+      this.produit = parseInt(this.produit,10) - 1
     }
   }
 }

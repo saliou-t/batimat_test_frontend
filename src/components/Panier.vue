@@ -17,7 +17,7 @@
             </v-list-item>
         </v-list>
         <strong class="ml-3">Panier</strong>
-        <v-list subheader two-line class="mt-1" v-for="produit in panier" :key="produit.reference">
+        <v-list subheader two-line class="mt-1" v-for="produit in panier" :key="produit.id">
             <v-list-item>
                 <v-list-item-avatar rounded color="grey lighten-4">
                     <v-img src="2.png"></v-img>
@@ -25,24 +25,26 @@
                 <v-list-item-content>
                     <v-list-item-title class="subtitle-2">{{ produit.reference }}</v-list-item-title>
                     <v-list-item-subtitle>x{{ produit.quantite }}
-                        <v-btn plain color="green" small>
-                            <v-icon right>mdi-pencil</v-icon>
+                        <v-btn plain color="red" small>
+                            <v-icon right @click="supprimerDuPanier(produit)">mdi-pencil</v-icon>
                         </v-btn>
 
                     </v-list-item-subtitle>
                 </v-list-item-content>
                 <v-list-item-action class="caption">{{ produit.prix_unitaire }} F</v-list-item-action>
             </v-list-item>
+            <v-toolbar color="rgba(0,0,0,0)" flat>
+                <strong>Sous total</strong><v-spacer></v-spacer><strong>{{produit.sousTotal}} F</strong>
+            </v-toolbar>
+            <hr>
         </v-list>
-        <v-toolbar color="rgba(0,0,0,0)" flat>
-            <strong>Sous total</strong><v-spacer></v-spacer><strong>1670 F</strong>
-        </v-toolbar>
+        
         <v-toolbar color="rgba(0,0,0,0)" flat class="mt-n6">
-            <span>Nombre produit(s)</span><v-spacer></v-spacer><span>3</span>
+            <span>Nombre produit(s)</span><v-spacer></v-spacer><span>{{ panier.length }}</span>
         </v-toolbar>
         <v-divider class="mx-4"></v-divider>
         <v-toolbar color="rgba(0,0,0,0)" flat>
-            <strong>Total</strong><v-spacer></v-spacer><strong>5500 F</strong>
+            <strong>Total</strong><v-spacer></v-spacer><strong>{{sousTotal}} F</strong>
         </v-toolbar>
         <div class="div">
             <div class="col">
@@ -151,14 +153,23 @@
 import { saveVente } from '../services/Vente/vente.service';
 
 export default {
+    data() {
+        return {
+            sousTotal :0
+        }
+    },
     computed: {
         panier() {
+            let panier = this.$store.state.panier
+            for (const item in panier) {
+                this.sousTotal+= panier[item].prix_unitaire
+            }
             return this.$store.state.panier
         }
     },
     methods: {
         supprimerDuPanier(produit) {
-            this.$store.dispatch('supprimerProduitDuPanier', produit)
+            this.$store.commit('removeFromCart', produit)
         },
 
         Enregister(){
