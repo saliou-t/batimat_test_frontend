@@ -173,7 +173,8 @@ export default {
         Enregister(){
             let panier = this.$store.state.panier
            
-            saveVente(panier)
+             saveVente(panier)
+            
         }
     }
 }

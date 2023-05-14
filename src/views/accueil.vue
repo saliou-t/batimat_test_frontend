@@ -272,6 +272,7 @@ export default {
     addToCart(produit_ajoute) {
      
       let produit = {
+        'id':produit_ajoute.id,
         'reference': produit_ajoute.reference,
         'quantite_disponible': produit_ajoute.quantite_dispo,
         'sousTotal': produit_ajoute.prix_unitaire * produit_ajoute.quantite_initiale,
