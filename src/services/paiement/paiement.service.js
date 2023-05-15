@@ -55,4 +55,4 @@ const finalisePaiement = (paiement_id) => {
 }
 
 
-module.exports = {getLisePaiementByUser, savePaiment, finalisePaiement}
+module.exports = {getLisePaiementByUser, savePaiment, finalisePaiement, generateRandomString}

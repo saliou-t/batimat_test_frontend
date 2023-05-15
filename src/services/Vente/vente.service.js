@@ -1,15 +1,15 @@
 const { default: Api } = require('../Api');
-const { savePaiment } = require('../paiement/paiement.service');
+const { savePaiment, generateRandomString } = require('../paiement/paiement.service');
 
 var user = JSON.parse(localStorage.getItem('user'))
 
-const getListeVentesByUser = () => {
+const getListeVentesByUser = ()=> {
     let ventes = []
    
     Api()
     .get('/user-vente/'+user.id)
     .then(response => {
-        let data =  response.data;
+        let data =  response.data.ventes;
         for (const index in data) {
             ventes.push(data[index])
         }
@@ -29,6 +29,7 @@ const saveVente = (produits ,moyenPaiement) => {
     Api()
     .post('/vente',{
         user_id: user.id,
+        numero: generateRandomString(5),
         montant_total: montantTotal
     })
     .then(response => {
@@ -39,6 +40,11 @@ const saveVente = (produits ,moyenPaiement) => {
         }
       
     })
+}
+
+
+const finaliseVente = (produits ,moyenPaiement) => {
+    alert('finalise')
 }
 
 
@@ -57,4 +63,4 @@ const saveLigneVente = (produit, vente_id) => {
 }
 
 
-module.exports = {getListeVentesByUser, saveVente, saveLigneVente}
+module.exports = {getListeVentesByUser, saveVente, saveLigneVente,}

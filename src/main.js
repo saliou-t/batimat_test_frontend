@@ -3,6 +3,13 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify'
+import dayjs from 'dayjs'
+Vue.use({
+  install (Vue) {
+    Vue.prototype.$dayjs = dayjs
+  }
+})
+
 
 Vue.config.productionTip = false
 
