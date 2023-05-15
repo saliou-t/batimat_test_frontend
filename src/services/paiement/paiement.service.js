@@ -1,6 +1,7 @@
 const { default: Api } = require('../Api');
 
 var user = JSON.parse(localStorage.getItem('user'))
+const { default: router } = require('../../router'); 
 
 const getLisePaiementByUser = () => {
     let paiements = []
@@ -17,17 +18,18 @@ const getLisePaiementByUser = () => {
 }
 
 const savePaiment = (moyenPaiement, vente_id) => {
-//    alert(moyenPaiement)  
     Api()
-    .post('/paiement/',{
+    .post('/paiement',{
         numero:generateRandomString(5),
         vente_id: vente_id,
-        moyen_de_paiement: moyenPaiement,
+        moyen_de_paiment: moyenPaiement,
         etat:"Enregistre"
     })
     .then(response => {
         console.log(response.status);
     })
+    
+    router.push('/vente')
 }
 
 const generateRandomString = (length) => {
