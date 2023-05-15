@@ -17,7 +17,7 @@
                 :rules="emailRules"
                 type="email"
                 label="Email"
-                color="#458133"
+                color="#ff0000"
                 placeholder="Email"
                 prepend-inner-icon="mdi-account"
                 required
@@ -27,7 +27,7 @@
                 :rules="passwordRules"
                 :type="passwordShow?'text':'password'"
                 label="Password"
-                color="#458133"
+                color="#ff0000"
                 placeholder="Password"
                 prepend-inner-icon="mdi-key"
                 :append-icon="passwordShow ? 'mdi-eye':'mdi-eye-off'"

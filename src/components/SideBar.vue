@@ -35,7 +35,6 @@ export default {
         goto(item){
             if (this.$route.path !== item.path){
                 this.$router.push({ name: item.path_name })
-
             }
         }
     },

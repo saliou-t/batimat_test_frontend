@@ -286,9 +286,7 @@ export default {
     },
 
     decrement (produit) {
-      if (1 > produit.quantite_initiale ) {
-        produit.quantite_initiale = parseInt(produit.quantite_initiale,10) - 1 
-      }
+      produit.quantite_initiale = parseInt(produit.quantite_initiale,10) - 1 
     }
   }
 }

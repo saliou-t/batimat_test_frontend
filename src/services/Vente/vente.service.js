@@ -1,10 +1,13 @@
 const { default: Api } = require('../Api');
+const { savePaiment } = require('../paiement/paiement.service');
 
-const getListeVentes = () => {
+var user = JSON.parse(localStorage.getItem('user'))
+
+const getListeVentesByUser = () => {
     let ventes = []
    
     Api()
-    .get('/vente')
+    .get('/user-vente/'+user.id)
     .then(response => {
         let data =  response.data;
         for (const index in data) {
@@ -14,25 +17,27 @@ const getListeVentes = () => {
     return ventes
 }
 
-const saveVente = (produits) => {
+const saveVente = (produits ,moyenPaiement) => {
+    
     
     let montantTotal = 0
+
     for (const index in produits) {
        montantTotal += produits[index].sousTotal
     }
     
-    let user =JSON.parse(localStorage.getItem('user'))
-
     Api()
     .post('/vente',{
         user_id: user.id,
-        montant_total: montantTotal,
-        etat:"Enregistre",
+        montant_total: montantTotal
     })
     .then(response => {
+        savePaiment(moyenPaiement, response.data.vente.id )
+
         for (const index in produits) {
             saveLigneVente(produits[index], response.data.vente.id)   
         }
+      
     })
 }
 
@@ -52,4 +57,4 @@ const saveLigneVente = (produit, vente_id) => {
 }
 
 
-module.exports = {getListeVentes, saveVente, saveLigneVente}
+module.exports = {getListeVentesByUser, saveVente, saveLigneVente}
