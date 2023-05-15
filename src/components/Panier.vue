@@ -38,13 +38,13 @@
             <hr>
         </v-list>
         <v-toolbar color="rgba(0,0,0,0)" flat class="mt-1">
-            <span>Nombre produit(s)</span><v-spacer></v-spacer><span>{{ panier.length }}</span>
+            <span>Nombre produit (s) ajouté(s)</span><v-spacer></v-spacer><span>{{ panier.length }}</span>
         </v-toolbar>
         <v-divider class="mx-4"></v-divider>
-        <v-toolbar color="rgba(0,0,0,0)" flat>
+        <v-toolbar color="rgba(0,0,0,0)" flat v-if="panier.length >= 1">
             <strong>Total</strong><v-spacer></v-spacer><strong>{{sousTotal}} F</strong>
         </v-toolbar>
-        <div class="div">
+        <div class="div" v-if="panier.length >= 1">
             <div class="col">
                 <strong class="">Paiement</strong>
                 <v-item-group mandatory class="mt-4">
@@ -77,7 +77,7 @@
                 </v-item-group>
             </div>
         </div>
-        <div class="div">
+        <div class="div" v-if="panier.length >= 1">
             <div class="col">
                 <strong class="">Enregistrer la vente</strong>
                 <v-item-group mandatory class="mt-4">
