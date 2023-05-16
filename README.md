@@ -1,24 +1,16 @@
-# coffee
+# Documentation du projet SDV
 
-## Project setup
+## Cloner le projet avec la commande suivant :
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### Pour lancer le serveur de developpement local, tapez la commande suivante : 
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### Compiler le code source
 ```
 npm run build
 ```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
