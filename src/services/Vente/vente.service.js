@@ -3,19 +3,37 @@ const { savePaiment, generateRandomString } = require('../paiement/paiement.serv
 
 var user = JSON.parse(localStorage.getItem('user'))
 
-const getListeVentesByUser = ()=> {
+const getListeVentesNotPayedByUser = ()=> {
     let ventes = []
    
     Api()
-    .get('/user-vente/'+user.id)
+    .get('/user-vente-non-payer/'+user.id)
     .then(response => {
         let data =  response.data.ventes;
         for (const index in data) {
             ventes.push(data[index])
         }
+
     })
     return ventes
 }
+
+const getListeVentesPayedByUser = ()=> {
+    let ventes = []
+   
+    Api()
+    .get('/user-vente-payer/'+user.id)
+    .then(response => {
+        let data =  response.data.ventes;
+        for (const index in data) {
+            ventes.push(data[index])
+        }
+
+    })
+    return ventes
+}
+
+
 
 const saveVente = (produits ,moyenPaiement) => {
     
@@ -43,8 +61,8 @@ const saveVente = (produits ,moyenPaiement) => {
 }
 
 
-const finaliseVente = (produits ,moyenPaiement) => {
-    alert('finalise')
+const finaliseVente = (vente) => {
+    console.log(vente);
 }
 
 
@@ -63,4 +81,4 @@ const saveLigneVente = (produit, vente_id) => {
 }
 
 
-module.exports = {getListeVentesByUser, saveVente, saveLigneVente,}
+module.exports = {getListeVentesNotPayedByUser, saveVente, saveLigneVente, finaliseVente, getListeVentesPayedByUser}

@@ -36,21 +36,22 @@ const generateRandomString = (length) => {
     let result = '';
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     const charactersLength = characters.length;
+    
     for (let i = 0; i < length; i++) {
       result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
     return result;
 }
-  
 
-const finalisePaiement = (paiement_id) => {
-     
+const finalisePaiement = (vente) => {
+    console.log(vente.paiement) 
     Api()
-    .patch('/paiement/'+paiement_id,{
+    .patch('/paiement/'+vente.paiement.id,{
         etat: "Termine"
     })
     .then(response => {
         console.log(response.status);
+        router.push('/paiement')
     })
 }
 

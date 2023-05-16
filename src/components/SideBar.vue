@@ -13,8 +13,8 @@
               </v-list-item>
           </v-list-item-group>
       </v-list>
-      <div style="position: absolute; bottom: 20px; margin-left: auto; margin-right: auto; left:0; right:0; text-align: center;">
-          <v-icon>fas fa-sign-out-alt</v-icon><br><span class="caption">Déconnexion</span>
+      <div style="position: absolute; cursor: pointer; bottom: 20px; margin-left: auto; margin-right: auto; left:0; right:0; text-align: center;" @click="deconnexion()">
+          <v-icon>fas fa-sign-out-alt</v-icon><br><span class="caption" >Déconnexion</span>
       </div>
   </v-navigation-drawer>
 </template>
@@ -36,6 +36,12 @@ export default {
             if (this.$route.path !== item.path){
                 this.$router.push({ name: item.path_name })
             }
+        },
+
+        deconnexion(){
+            localStorage.removeItem('user')
+            localStorage.removeItem('user_token')
+            router.go('/login')
         }
     },
 }

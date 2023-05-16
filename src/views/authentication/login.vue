@@ -1,7 +1,7 @@
 <template>
-  <section >
+  <section class="mt-5">
     <div class="backgruond"></div>
-    <v-main class="d-flex justify-center align-center ">
+    <v-main class="d-flex justify-center align-center mt-5">
       <v-col cols="10" lg="4" class="mx-auto ">
         <v-card class="pa-4 blog">
           <div class="text-center">
@@ -44,6 +44,9 @@
           </v-form>
         </v-card>
       </v-col>
+      <v-snackbar top :color="snackbarColor" v-model="snackbar">
+      {{message}}
+    </v-snackbar>
     </v-main>
     
   </section>
@@ -85,7 +88,8 @@ export default {
 
     setUser(user){
       localStorage.setItem('user',JSON.stringify(user))
-      localStorage.setItem('id',user.id)
+      
+     
       
       store.commit('setUser', user)
       store.commit('setUsername', user.username)
@@ -113,7 +117,15 @@ export default {
         })
         .then(response => {
           this.setUser(response.data.user)
-          this.goto("/")
+
+          let token = JSON.stringify(response.data.authorisation.token)
+          let tokenWhithoutQuotes = token.substring(1, token.length - 1); //j'enlève le premier et le dernier caractère du tocken, les quotes
+          localStorage.setItem('user_token',tokenWhithoutQuotes)
+
+          this.showAlert("Connexion réussie", "green")
+          setTimeout(()=> {
+            this.goto("/")
+          }, 700)
         })
         .catch(error => {
           console.log(error);

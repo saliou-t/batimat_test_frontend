@@ -5,8 +5,8 @@
       
         <v-toolbar-title class="mt-n3">Point de Vente !</v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-text-field label="Rechercher produit par référence..."  v-model="searchInput" class="mt-5" color="brown" filled
-          append-icon="mdi-magnify" dense solo flat background-color="grey lighten-4"></v-text-field>
+        <v-text-field label="Rechercher produit par référence..."  v-model="search" @input="searchArticles" class="mt-5" color="brown" filled
+          append-icon="mdi-magnify" dense solo flat background-color="red lighten-4" ></v-text-field>
       </v-toolbar>
       <v-item-group mandatory class="mt-n1">
         <v-container>
@@ -161,7 +161,59 @@
       <v-toolbar color="#EEEEEE" flat>
         <v-toolbar-title>Produits</v-toolbar-title><v-spacer></v-spacer><span color="grey">Reçents</span>
       </v-toolbar>
-      <v-row>
+      <div class="row" v-if="searchResults.length > 0">
+          <v-col cols="8" sm="6" v-for="produit in searchResults" v-bind:key="produit.reference">
+            <v-card flat class="rounded-lg mx-5 mes_carte">
+              <v-list-item three-line>
+                <v-list-item-avatar rounded size="120" color="grey lighten-4">
+                  <v-img :src=produit.image></v-img>
+                </v-list-item-avatar>
+                <v-list-item-content>
+                  <v-list-item-title class="text-h6">
+                    Ref: {{produit.reference}}
+                  </v-list-item-title>
+                  <v-list-item-subtitle class="mt-1">Designation : <br> {{ produit.designation }}</v-list-item-subtitle>
+                  <strong class="mt-3">
+                    Unité : {{produit.prix_unitaire}} F
+                  </strong>
+                </v-list-item-content>
+              </v-list-item>
+
+              <v-card-actions>
+                <v-row>
+                  <v-col cols="12" sm="6" class="mt-1 ">
+                    <strong class="ml-3">Quantité disponible</strong><br>
+                    <v-item-group mandatory class="mt-n1 ">
+                      <v-container>
+                        <v-row class="">
+                          <v-col cols="4" md="4">
+                            <strong>{{produit.quantite_disponible}}</strong>
+                          </v-col>
+                        </v-row>
+                      </v-container>
+                    </v-item-group>
+                  </v-col>
+                  <v-col cols="8" sm="5" class=" ">
+                    <strong class="ml-3">Quantité souhaitée</strong><br>
+                    <v-item-group mandatory class="mt-n3">
+                      <v-text-field v-model=produit.quantite_initiale label="" max="4" append-outer-icon="add" @click:append-outer="increment(produit)" prepend-icon="remove" @click:prepend="decrement(produit)"></v-text-field>
+                      
+                    </v-item-group>
+                  </v-col>
+
+                </v-row>
+
+              </v-card-actions>
+              
+              <v-card-actions>
+
+                <v-btn color="#ff0000" block dark class="withoutupercase mb-2" @click="addToCart(produit)">Ajouter au panier</v-btn>
+
+              </v-card-actions>
+            </v-card>
+          </v-col>
+        </div>
+      <v-row v-else>
         <v-col cols="8" sm="6" v-for="produit in produits" v-bind:key="produit.reference">
           <v-card flat class="rounded-lg mx-5 mes_carte">
             <v-list-item three-line>
@@ -211,8 +263,7 @@
 
             </v-card-actions>
           </v-card>
-        </v-col>
-        
+        </v-col>        
       </v-row>
     </v-container>
   </v-app>
@@ -225,28 +276,32 @@ export default {
   name: 'Home',
   data () {
      return {
-       produit: 0,
-       quantite_dispo: 5,
-       produits:[],
-      searchInput: "",
-      resulat_recherche:[]
+      produit: 0,
+      quantite_dispo: 5,
+      produits:[],
+      search: "",
+      searchResults:[]
      }
   },
 
-  computed: {
-    searchResults() {
-      if (!this.searchInput) {
-        return [];
-      }
-      return this.produits.filter(produit => produit.reference.toLowerCase() == this.searchInput.toLowerCase());
-    },
-  },
-
+ 
   created() {
     this.getProduits()
   },
 
+  
   methods: {
+
+    searchArticles() {
+      // Recherche des articles correspondant à la recherche de l'utilisateur
+      this.searchResults = this.produits.filter(produit => {
+        return produit.reference.toLowerCase().startsWith(this.search.toLowerCase());
+      });
+
+      if(this.searchResults.length <= 0 ){
+        this.searchResults = []
+      }
+    },
 
     getProduits(){
       let produits = []
@@ -281,6 +336,7 @@ export default {
         'designation': produit_ajoute.designation,
         'quantite': produit_ajoute.quantite_initiale
       }
+      produit_ajoute.quantite_initiale = 1
 
       this.$store.commit('addToCart', produit)
     },
