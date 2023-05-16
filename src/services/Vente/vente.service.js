@@ -18,6 +18,21 @@ const getListeVentesNotPayedByUser = ()=> {
     return ventes
 }
 
+const getAllUserVentes = ()=> {
+    let ventes = []
+   
+    Api()
+    .get('/user-all-ventes/'+user.id)
+    .then(response => {
+        let data =  response.data.ventes;
+        for (const index in data) {
+            ventes.push(data[index])
+        }
+
+    })
+    return ventes
+}
+
 const getListeVentesPayedByUser = ()=> {
     let ventes = []
    
@@ -81,4 +96,4 @@ const saveLigneVente = (produit, vente_id) => {
 }
 
 
-module.exports = {getListeVentesNotPayedByUser, saveVente, saveLigneVente, finaliseVente, getListeVentesPayedByUser}
+module.exports = {getListeVentesNotPayedByUser, saveVente, saveLigneVente, finaliseVente, getListeVentesPayedByUser, getAllUserVentes}

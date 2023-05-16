@@ -3,10 +3,10 @@
     <v-container>
 
       <v-toolbar color="#EEEEEE" flat>
-        <v-toolbar-title>Liste de mes ventes</v-toolbar-title><v-spacer></v-spacer><span color="grey">Reçents</span>
+        <v-toolbar-title>Liste de toutes mes ventes : payés et non payés</v-toolbar-title><v-spacer></v-spacer><span color="grey">Global : {{ ventes.length }} ventes</span>
       </v-toolbar>
       <v-row>
-        <v-col cols="8" sm="12" v-for="vente in ventes" v-bind:key="vente.reference">
+        <v-col cols="8" sm="12" v-for="vente in ventes" v-bind:key="vente.reference" class="mt-4">
           <v-card flat class="rounded-lg mx-5 mes_carte">
             <v-list-item three-line>
               <div class="row">
@@ -22,15 +22,15 @@
                     <v-list-item-subtitle class="mt-3">Vente enregistrée le : {{
                       $dayjs(vente.created_at).format('YYYY-MM-DD') }}</v-list-item-subtitle>
                     <strong class="mt-3">
-                      Total : {{ vente.montant_total }} F
+                      Total : {{ vente.montant_total }} 
                     </strong>
                   </v-list-item-content>
                 </div>
-                <div class="col-4">
+                <div class="col-4" v-if="vente.paiement.etat == 'Termine'">
                   <v-list-item-content>
-                    <!-- <v-list-item-subtitle class="mt-3">Paiement status : {{ vente.paiement }}</v-list-item-subtitle> -->
+                    <v-list-item-subtitle class="mt-3">Paiement validé le : {{$dayjs(vente.paiement.date_enregistrement).format('YYYY-MM-DD') }} </v-list-item-subtitle>
                     <strong class="mt-3">
-                      <!-- Total : {{vente.montant_total}} F -->
+                      Numéro paiement : {{ vente.paiement.numero }}
                     </strong>
                   </v-list-item-content>
                 </div>
@@ -84,9 +84,9 @@
 
             </v-card-actions>
 
-            <v-card-actions>
+            <v-card-actions  v-if="vente.paiement.etat == 'Enregistre'">
 
-              <v-btn color="green" :disabled="loader" :loading="loader" block dark class="withoutupercase mb-2"
+              <v-btn color="green"  :disabled="loader" :loading="loader" block dark class="withoutupercase mb-2"
                 @click="finaliseVente(vente)">Finaliser</v-btn>
 
               </v-card-actions>
@@ -160,7 +160,8 @@
 </template>
 
 <script>
-import { getListeVentesNotPayedByUser, finaliseVente } from '../services/Vente/vente.service';
+import { getListeVentesNotPayedByUser, getAllUserVentes, finaliseVente } from '../services/Vente/vente.service';
+
 import { finalisePaiement } from '../services/paiement/paiement.service';
 
 export default {
@@ -233,21 +234,24 @@ export default {
 
     save(vente){
       this.dialogForm = false
+
+      let beneficiare = {
+        nomComplet : this.beneficiaire_nom_complet,
+        adresse: this.beneficiaire_adresse,
+        telephone: this.beneficiaire_telephone
+      }
       
-      finalisePaiement(vente)
-      this.removeVenteInListe(vente.id)
-      // this.verficationMontantPaiement(vente) 
+      finalisePaiement(vente, beneficiare)
       
     },
     getVentes() {
-      this.ventes = getListeVentesNotPayedByUser()
+      this.ventes = getAllUserVentes()
     },
 
     removeVenteInListe(id) {
 
       const index = ventes.findIndex(v => v.id === id);
       ventes.splice(index, 1);
-
     },
 
     finaliseVente(vente) {

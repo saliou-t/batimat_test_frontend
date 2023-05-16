@@ -3,7 +3,7 @@
     <v-container>
 
       <v-toolbar color="#EEEEEE" flat>
-        <v-toolbar-title>Liste de mes paiements</v-toolbar-title><v-spacer></v-spacer><span color="grey">Reçents</span>
+        <v-toolbar-title>Liste de mes paiements</v-toolbar-title><v-spacer></v-spacer><span color="grey">Globle : {{ paiement.length }}</span>
       </v-toolbar>
       <v-row>
         <v-col cols="8" sm="12" v-for="paiement in paiement" v-bind:key="paiement.reference">
@@ -28,7 +28,7 @@
                 </div>
                 <div class="col-4">
                   <v-list-item-content>
-                    <v-list-item-subtitle class="mt-3">Paiement enregistré le : {{ paiement.paiement
+                    <v-list-item-subtitle class="mt-3">Paiement enregistré le : {{ paiement.paiement.numero
                     }}</v-list-item-subtitle>
                     <strong class="mt-3">
                       <!-- Total : {{paiement.montant_to

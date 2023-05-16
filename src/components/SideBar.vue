@@ -1,7 +1,7 @@
 <template>
   <v-navigation-drawer v-model="drawer" app color="white" mini-variant mini-variant-width="90">
-      <v-avatar class="d-block text-center mx-auto mt-4" size="40">
-          <v-icon color="#ff0000">fas fa-codepen</v-icon>
+      <v-avatar class="d-block text-center mx-auto mt-5 " size="50">
+          <strong>PDV</strong>
       </v-avatar>
       <v-list flat class="mt-4">
           <v-list-item-group v-model="selectedItem">

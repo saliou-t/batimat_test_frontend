@@ -25,7 +25,7 @@
 
                           </div>
                           <v-list-item-subtitle :class="active ? 'brown--text' : 'black--text'"
-                            class=" caption mt-4">ALL</v-list-item-subtitle>
+                            class=" caption mt-4">Tous</v-list-item-subtitle>
 
                         </v-list-item-content>
                       </v-list-item>
@@ -49,7 +49,7 @@
 
                           </div>
                           <v-list-item-subtitle :class="active ? 'brown--text' : 'black--text'"
-                            class=" caption mt-3">Coffee</v-list-item-subtitle>
+                            class=" caption mt-3">Categorie 1</v-list-item-subtitle>
 
                         </v-list-item-content>
                       </v-list-item>
@@ -73,7 +73,7 @@
 
                           </div>
                           <v-list-item-subtitle :class="active ? 'brown--text' : 'black--text'"
-                            class=" caption mt-2">Juice</v-list-item-subtitle>
+                            class=" caption mt-2">Categorie 2</v-list-item-subtitle>
 
                         </v-list-item-content>
                       </v-list-item>
@@ -96,8 +96,7 @@
                             <v-img src="https://via.placeholder.com/80" max-height="80" max-width="80" contain></v-img>
 
                           </div>
-                          <v-list-item-subtitle :class="active ? 'brown--text' : 'black--text'" class=" caption mt-2">Milk
-                            Based</v-list-item-subtitle>
+                          <v-list-item-subtitle :class="active ? 'brown--text' : 'black--text'" class=" caption mt-2">Categorie 3</v-list-item-subtitle>
 
                         </v-list-item-content>
                       </v-list-item>
@@ -121,7 +120,7 @@
 
                           </div>
                           <v-list-item-subtitle :class="active ? 'brown--text' : 'black--text'"
-                            class=" caption mt-3">Snack</v-list-item-subtitle>
+                            class=" caption mt-3">Categorie 4</v-list-item-subtitle>
 
                         </v-list-item-content>
                       </v-list-item>
@@ -145,7 +144,7 @@
 
                           </div>
                           <v-list-item-subtitle :class="active ? 'brown--text' : 'black--text'"
-                            class=" caption mt-4">Dessert</v-list-item-subtitle>
+                            class=" caption mt-4">Categorie 5</v-list-item-subtitle>
 
                         </v-list-item-content>
                       </v-list-item>
