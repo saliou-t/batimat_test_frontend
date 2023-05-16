@@ -3,6 +3,7 @@ const { default: Api } = require('../Api');
 var user = JSON.parse(localStorage.getItem('user'))
 const { default: router } = require('../../router'); 
 
+
 const getLisePaiementByUser = () => {
     let paiements = []
    
@@ -31,6 +32,9 @@ const savePaiment = (moyenPaiement, vente_id) => {
     
     router.push('/vente')
 }
+
+
+
 
 const generateRandomString = (length) => {
     let result = '';
