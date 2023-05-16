@@ -27,6 +27,7 @@ const savePaiment = (moyenPaiement, vente_id) => {
         etat:"Enregistre"
     })
     .then(response => {
+        
         console.log(response.status);
     })
     
@@ -38,15 +39,14 @@ const saveTicket = (paiement_id, beneficiaire) => {
     Api()
     .post('/ticket/',{
         paiement_id:paiement_id,
-        nom_complet_beneficiaire: beneficiaire.nomCompletBeneficiaire,
-        numero_beneficiaire: beneficiaire.telephone,
-        etat:"Enregistre"
+        nom_complet_beneficiaire: beneficiaire.nomComplet,
+        telephone_beneficiaire: beneficiaire.telephone,
+        adresse_beneficiaire: beneficiaire.adresse,
     })
     .then(response => {
         console.log(response.status);
+        router.push('/paiement')
     })
-    
-    router.push('/vente')
 }
 
 
@@ -63,15 +63,17 @@ const generateRandomString = (length) => {
     return result;
 }
 
-const finalisePaiement = (vente) => {
+const finalisePaiement = (vente, beneficiaire_infos) => {
     console.log(vente.paiement) 
     Api()
     .patch('/paiement/'+vente.paiement.id,{
-        etat: "Termine"
+        etat: "Termine",
+        date_enregistrement: new Date().toJSON().slice(0, 10)
     })
     .then(response => {
+        saveTicket(response.data.paiement.id, beneficiaire_infos)
         console.log(response.status);
-        router.push('/paiement')
+        
     })
 }
 
