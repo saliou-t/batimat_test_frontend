@@ -92,7 +92,7 @@
             </div>
             <v-card-actions>
 
-              <v-btn color="green" block dark class=" withoutupercase mb-2" @click="Imprimer(paiement)">Cliquez pour
+              <v-btn color="green" block dark class=" withoutupercase mb-2" @click="Imprimer(paiement, paiement.lignes)">Cliquez pour
                 imprimer</v-btn>
 
             </v-card-actions>
@@ -141,37 +141,53 @@ export default {
       paiement.splice(index, 1);
 
     },
-    Imprimer(vente) {
+    Imprimer(paiement, lignes) {
+      console.log(lignes);
       pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
+      const linesTable = [];
+      linesTable.push(["Référence produit", "Quantité","Px unitaire"])
+
+        // Parcourir les lignes de produits et les ajouter à la table des lignes
+        lignes.forEach((ligne) => {
+          linesTable.push([
+            ligne.produit.reference,
+            ligne.quantite,
+            ligne.produit.prix_unitaire
+          ]);
+        });
+
+       
       const docDefinition = {
         content: [
-          { text: 'Informations de paiement', style: 'header' },
+          { text: 'Informations de paiement', style: 'header' , alignment:"center"},
           { text: `Méthode de paiement : WAVE`, style: 'subheader' },
-          { text: `Montant : ${vente.montant_total}`, style: 'subheader' },
-          // Ajoutez d'autres informations de paiement selon vos besoins
+          { text: `Total : ${paiement.montant_total}`, style: 'subheader' },
 
-          { text: 'Information de la vente', style: 'header' },
-          // Ajoutez ici le reste du contenu de votre document PDF
-
-          // Exemple d'utilisation d'une table pour afficher les informations de paiement
+          { text: 'Information de la paiement', style: 'subheader' },
+         
           {
             table: {
               headerRows: 1,
               body: [
                 ['Méthode de paiement', 'Montant'],
-                ['WAVE', vente.montant_total],
-                // Ajoutez d'autres lignes de tableau pour les autres informations de paiement
+                ['WAVE', paiement.montant_total],
               ],
               alignment: 'center'
             }
-          }
+          },
+          { text: 'Lignes de produits', style: 'subheader' },
+            {
+              table: {
+                body: linesTable
+              },
+          },
         ],
         styles: {
           header: {
             fontSize: 18,
             bold: true,
-            margin: [0, 0, 0, 10] // Marge inférieure pour séparer les sections
+            margin: [0, 0, 0, 10] 
           },
           subheader: {
             fontSize: 14,
