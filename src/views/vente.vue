@@ -3,7 +3,7 @@
     <v-container>
 
       <v-toolbar color="#EEEEEE" flat>
-        <v-toolbar-title>Liste de mes ventes</v-toolbar-title><v-spacer></v-spacer><span color="grey">Reçents</span>
+        <v-toolbar-title>Liste de toutes mes ventes : payés et non payés</v-toolbar-title><v-spacer></v-spacer><span color="grey">Global : {{ ventes.length }} ventes</span>
       </v-toolbar>
       <v-row>
         <v-col cols="8" sm="12" v-for="vente in ventes" v-bind:key="vente.reference" class="mt-4">
@@ -22,7 +22,7 @@
                     <v-list-item-subtitle class="mt-3">Vente enregistrée le : {{
                       $dayjs(vente.created_at).format('YYYY-MM-DD') }}</v-list-item-subtitle>
                     <strong class="mt-3">
-                      Total : {{ vente.montant_total }} F
+                      Total : {{ vente.montant_total }} 
                     </strong>
                   </v-list-item-content>
                 </div>
@@ -30,7 +30,7 @@
                   <v-list-item-content>
                     <v-list-item-subtitle class="mt-3">Paiement validé le : {{$dayjs(vente.paiement.date_enregistrement).format('YYYY-MM-DD') }} </v-list-item-subtitle>
                     <strong class="mt-3">
-                      <!-- Total : {{vente.montant_total}} F -->
+                      Numéro paiement : {{ vente.paiement.numero }}
                     </strong>
                   </v-list-item-content>
                 </div>

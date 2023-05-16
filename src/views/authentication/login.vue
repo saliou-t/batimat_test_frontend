@@ -8,7 +8,7 @@
             <v-avatar size="150" color="white">
                 <img src="https://via.placeholder.com/100" alt="">
             </v-avatar>
-            <h1 class="texte my-5">SDV Authentification</h1>
+            <h1 class="texte my-5">PDV : Authentification</h1>
           </div>
           <v-form @submit.prevent="submitHandler" ref="form">
             <v-card-text>
@@ -34,7 +34,7 @@
                 @click:append="passwordShow = !passwordShow"
                 required
               />
-              <v-switch label="Se souvenir de moi" color="#ff0000"></v-switch>
+              <v-switch label="Garder ma session " color="#ff0000"></v-switch>
             </v-card-text>
             <v-card-actions class="justify-center">
               <v-btn :loading="loading" type="submit" color="#ff0000">
