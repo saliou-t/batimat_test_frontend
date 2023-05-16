@@ -34,6 +34,22 @@ const savePaiment = (moyenPaiement, vente_id) => {
 }
 
 
+const saveTicket = (paiement_id, beneficiaire) => {
+    Api()
+    .post('/ticket/',{
+        paiement_id:paiement_id,
+        nom_complet_beneficiaire: beneficiaire.nomCompletBeneficiaire,
+        numero_beneficiaire: beneficiaire.telephone,
+        etat:"Enregistre"
+    })
+    .then(response => {
+        console.log(response.status);
+    })
+    
+    router.push('/vente')
+}
+
+
 
 
 const generateRandomString = (length) => {
@@ -60,4 +76,4 @@ const finalisePaiement = (vente) => {
 }
 
 
-module.exports = {getLisePaiementByUser, savePaiment, finalisePaiement, generateRandomString}
+module.exports = {getLisePaiementByUser, savePaiment, finalisePaiement, generateRandomString, saveTicket}

@@ -137,7 +137,9 @@ export default {
         Enregister(){
             let panier = this.$store.state.panier
              saveVente(panier, this.selectedMoyenPaiement)
-            
+             
+                this.$store.commit('clearCart');
+
         },
 
         selectMoyen(moyen){
